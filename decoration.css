@@ -1,0 +1,413 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #DDEECC;
+    height: 300vh; /* Aumenté la altura para permitir más scroll */
+    overflow: hidden; /* Inicialmente sin scroll */
+}
+
+/* Clase que se añade cuando se debe permitir el scroll */
+body.scroll-enabled {
+    overflow: auto;
+}
+
+.centro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.centroizq {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    width: 50vw;
+    transform: skew(-10deg);
+}
+
+.centroizq p {
+    color: #2F4F2F;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 1rem;
+    padding: 0;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.5rem;
+    transform: translateX(110%) skew(10deg);
+    animation: slide-from-right 1.5s ease-in-out 3.2s forwards;
+}
+
+.centroder {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    width: 50vw;
+    transform: skew(-10deg);
+}
+
+.centroder p {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: 1rem;
+    padding: 0;
+    font-size: 1.1rem;
+    font-family: sans-serif;
+    transform: translateX(-110%) skew(10deg);
+    animation: slide-from-left 1.5s ease-in-out 3.2s forwards;
+}
+
+.vline {
+    border-left: 3px solid #333;
+    height: 5rem;
+    width: 0;
+    position: relative;
+    z-index: 5;
+    animation: mover 3s ease-in-out forwards;
+}
+
+.centroizq::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1px;
+    height: 100vh;
+    background: transparent;
+    z-index: 10;
+}
+
+.centroder::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100vh;
+    background: transparent;
+    z-index: 10;
+}
+
+.back-transicion {
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    height: 0vh;
+    background-color: rgb(51, 161, 78);
+    z-index: 11;
+    animation: 1.5s cambiar-fondo ease-in-out 6.2s forwards;
+}
+
+.intro-page {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    color: white;
+    font-size: 2vw;
+    opacity: 0;
+    animation: aparecer-texto 1s ease-in-out 8s forwards;
+    position: relative;
+}
+
+.intro-page-right {
+    /* Animación de flotación desfasada */
+    animation: estado-reposo 2s ease-in-out 9.7s infinite;
+}
+
+.intro-page-left {
+    /* Animación de flotación desfasada */
+    animation: estado-reposo 2s ease-in-out 10.0s infinite;
+}
+
+/* Contenedor para el efecto de expansión */
+.expansion-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    pointer-events: none;
+}
+
+.obj-transicion {
+    height: 30vh;
+    width: 30vw;
+    animation-name: estado-reposo, expandirScroll;
+    animation-duration: 2s, 1s;
+    animation-delay: 9.4s, none; /* Desfase de la imagen */
+    animation-timing-function: ease-in-out, linear;
+    animation-iteration-count: infinite, 1;
+    animation-timeline: auto, scroll(root);
+    animation-range: normal, entry 0% exit 100%;
+    animation-fill-mode: none, none; /* Evitar que mantenga el estado final */
+    
+    /* Hacer que la imagen mantenga su proporción */
+    object-fit: contain;
+}
+
+/* Clase para resetear la animación de scroll */
+.obj-transicion.reset {
+    animation: none;
+}
+
+.obj-transicion.reset.reactivate {
+    animation-name: estado-reposo, expandirScroll;
+    animation-duration: 2s, 1s;
+    animation-delay: 9.4s, none;
+    animation-timing-function: ease-in-out, linear;
+    animation-iteration-count: infinite, 1;
+    animation-timeline: auto, scroll(root);
+    animation-range: normal, entry 0% exit 100%;
+    animation-fill-mode: none, none;
+}
+
+/* Fondo de color que aparece cuando la imagen se expande */
+.color-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #007F7F; /* Color verde que simula el color dominante de la imagen */
+    opacity: 0;
+    z-index: 49;
+    animation-name: revelar-fondo;
+    animation-duration: 1s;
+    animation-delay: none;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+    animation-timeline: scroll(root);
+    animation-range: entry 50% exit 100%;
+    animation-fill-mode: both;
+}
+
+/* Contenido adicional después del scroll - PERMANENTE */
+.content-after-expand {
+    height: 100vh;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    color: white;
+    opacity: 0;
+    z-index: 51;
+    position: fixed; /* Fijo en pantalla */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    transform: translateY(50px);
+    transition: all 1s ease-out;
+    padding-top: 80px;
+}
+
+/* Estados del contenido */
+.content-after-expand.show {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.content-after-expand.hide {
+    opacity: 0 !important;
+    transform: translateY(50px) !important;
+}
+
+.content-after-expand h1 {
+    margin: 0;
+    font-size: 4rem;
+    text-align: center;
+}
+
+.content-after-expand p {
+    margin: 1rem 0 0 0;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.navigation-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 80px;
+    background: rgba(0, 127, 127, 0.9);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 52;
+    opacity: 0;
+    transform: translateY(-100px);
+    transition: all 1s ease-out;
+}
+
+.navigation-bar.show {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.navigation-bar.hide {
+    opacity: 0 !important;
+    transform: translateY(-100px) !important;
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: nav-link-appear 0.8s ease-out forwards;
+}
+
+.nav-links li:nth-child(1) { animation-delay: 0.2s; }
+.nav-links li:nth-child(2) { animation-delay: 0.4s; }
+.nav-links li:nth-child(3) { animation-delay: 0.6s; }
+.nav-links li:nth-child(4) { animation-delay: 0.8s; }
+.nav-links li:nth-child(5) { animation-delay: 1.0s; }
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 10px 20px;
+}
+
+@keyframes nav-link-appear {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+@keyframes estado-reposo {
+    0% { transform: translateY(0rem); }
+    50% { transform: translateY(-1rem); }
+    100% { transform: translateY(0rem); }
+}
+
+/* Animación de ola para el texto */
+@keyframes texto-ola {
+    0% { 
+        opacity: 0; 
+        transform: translateY(30px);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+/* Aplicar animación de ola a cada div de texto individualmente */
+.intro-page-right div:nth-child(1) {
+    opacity: 0;
+    animation: texto-ola 0.8s ease-out 8.5s forwards;
+}
+
+.intro-page-right div:nth-child(2) {
+    opacity: 0;
+    animation: texto-ola 0.8s ease-out 8.8s forwards;
+}
+
+.intro-page-left div:nth-child(1) {
+    opacity: 0;
+    animation: texto-ola 0.8s ease-out 9.1s forwards;
+}
+
+.intro-page-left div:nth-child(2) {
+    opacity: 0;
+    animation: texto-ola 0.8s ease-out 9.4s forwards;
+}
+
+
+@keyframes expandirScroll {
+    from { 
+        scale: 1; 
+        opacity: 1;
+    }
+    50% {
+        scale: 15;
+        opacity: 0.8;
+    }
+    to { 
+        scale: 25; 
+        opacity: 0;
+    }
+}
+
+@keyframes revelar-fondo {
+    from { 
+        opacity: 0; 
+        transform: scale(0.8);
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+}
+
+@keyframes aparecer-contenido {
+    from { 
+        opacity: 0; 
+        transform: translateY(100px) scale(0.9);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes aparecer-final {
+    from { 
+        opacity: 0; 
+        transform: translateY(50px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+@keyframes aparecer-texto {
+    from { transform: translateY(20%); }
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes cambiar-fondo {
+    0% { height: 0vh; }
+    to { height: 100vh; }
+}
+
+@keyframes mover {
+    from { transform: translateX(-100vw) rotate(0deg); }
+    to { transform: translateX(0) rotate(3610deg); }
+}
+
+@keyframes slide-from-right {
+    from { transform: translateX(150%) skew(10deg); }
+    to { transform: translateX(0) skew(10deg); }
+}
+
+@keyframes slide-from-left {
+    from { transform: translateX(-150%) skew(10deg); }
+    to { transform: translateX(0) skew(10deg); }
+}
