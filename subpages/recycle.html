@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reciclatón - Leaderboard</title>
+    <link rel="stylesheet" href="decoration_recycle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <script src="leaderboard.js" defer></script>
+</head>
+<body>
+    <div class="navigation-bar">
+        <ul class="nav-links">
+            <a href="../homepage.html" onclick="sessionStorage.setItem('fromSubpage', 'true')">Home</a>
+            <a href="./about.html">About</a>
+            <a id="central" href="./recycle.html">Leaderboard</a>
+            <a href="./contact.html">Contact</a>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h1>Leaderboard - Recolección de Chapitas</h1>    
+        <div class="dropdown-container">
+            <select id="gradeSelector" class="grade-dropdown">
+                <option value="8vo">8vo Grado</option>
+                <option value="9no">9no Grado</option>
+                <option value="10mo">10mo Grado</option>
+                <option value="11vo">11vo Grado</option>
+                <option value="promociones">Promociones</option>
+            </select>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-wrapper">
+                <div class="y-axis-container" id="yAxisContainer">
+                    <!-- Etiquetas del eje Y aquí -->
+                </div>
+                <div class="chart-main">
+                    <div class="grid-container" id="gridContainer">
+                        <!-- Líneas de la grilla aquí -->
+                    </div>
+                    <div class="bars-wrapper" id="barsWrapper">
+                        <!-- Barras aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="estructura_preg">
+        <div class="format_preg">
+            <div class="pregunta">
+                <h>¿Cómo puedo contribuir?</h>
+            </div>
+            <div class="respuesta">
+                <p>Tú puedes contribuir trayendo chapitas que tengas guardadas en tu casa, después se lo darás a tu tutor para que este lo guardo junto a las otras chapitas que tu salón juntó. Despues, a la hora de tutoria, los delegados ambientales se engargaran de pesar las bolsas de chapitas y actualizarán la tabla de resultados</p>
+            </div>
+            <br>
+            <br>
+            <div class="pregunta">
+                <h>¿Qué no debo hacer?</h>
+            </div>
+            <div class="respuesta">
+                <p>Ya que queremos que esto sea una competición sana, esta terminante prohibido donar cosas que no sean chapitas, (por ejemplo esconger objetos pesados dentro de las chapitas para asi ganar más puntaje)</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

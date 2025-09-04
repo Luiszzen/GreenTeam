@@ -1,14 +1,37 @@
+/* CSS DE HOMEPAGE */
 body {
     margin: 0;
     padding: 0;
     background-color: #DDEECC;
-    height: 300vh; /* Aumenté la altura para permitir más scroll */
-    overflow: hidden; /* Inicialmente sin scroll */
+    height: 300vh;
+    overflow: hidden;
 }
 
 /* Clase que se añade cuando se debe permitir el scroll */
 body.scroll-enabled {
     overflow: auto;
+}
+
+/* Añadir al final de decoration.css */
+
+/* Ocultar barras de scroll completamente */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+html,
+body {
+    -ms-overflow-style: none !important;  /* Internet Explorer 10+ */
+    scrollbar-width: none !important;  /* Firefox */
+    overflow: -moz-scrollbars-none !important;  /* Firefox legacy */
+}
+
+/* Para todos los elementos */
+*::-webkit-scrollbar {
+    display: none !important;
 }
 
 .centro {
@@ -116,22 +139,19 @@ body.scroll-enabled {
 }
 
 .intro-page-right {
-    /* Animación de flotación desfasada */
     animation: estado-reposo 2s ease-in-out 9.7s infinite;
 }
 
 .intro-page-left {
-    /* Animación de flotación desfasada */
     animation: estado-reposo 2s ease-in-out 10.0s infinite;
 }
 
-/* Contenedor para el efecto de expansión */
 .expansion-container {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 50;
+    z-index: 15;
     pointer-events: none;
 }
 
@@ -140,18 +160,15 @@ body.scroll-enabled {
     width: 30vw;
     animation-name: estado-reposo, expandirScroll;
     animation-duration: 2s, 1s;
-    animation-delay: 9.4s, none; /* Desfase de la imagen */
+    animation-delay: 9.4s, none;
     animation-timing-function: ease-in-out, linear;
     animation-iteration-count: infinite, 1;
     animation-timeline: auto, scroll(root);
     animation-range: normal, entry 0% exit 100%;
-    animation-fill-mode: none, none; /* Evitar que mantenga el estado final */
-    
-    /* Hacer que la imagen mantenga su proporción */
+    animation-fill-mode: none, none;
     object-fit: contain;
 }
 
-/* Clase para resetear la animación de scroll */
 .obj-transicion.reset {
     animation: none;
 }
@@ -167,47 +184,32 @@ body.scroll-enabled {
     animation-fill-mode: none, none;
 }
 
-/* Fondo de color que aparece cuando la imagen se expande */
 .color-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #007F7F; /* Color verde que simula el color dominante de la imagen */
+    background-color: #cecece;
     opacity: 0;
-    z-index: 49;
-    animation-name: revelar-fondo;
-    animation-duration: 1s;
-    animation-delay: none;
-    animation-timing-function: ease-out;
-    animation-iteration-count: 1;
+    z-index: 19;
+    animation: revelar-fondo 1s ease-out 0s 1 both;
     animation-timeline: scroll(root);
     animation-range: entry 50% exit 100%;
-    animation-fill-mode: both;
 }
 
-/* Contenido adicional después del scroll - PERMANENTE */
 .content-after-expand {
-    height: 100vh;
     background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
-    color: white;
+    color: rgb(255, 255, 255);
     opacity: 0;
-    z-index: 51;
-    position: fixed; /* Fijo en pantalla */
-    top: 0;
-    left: 0;
-    width: 100vw;
-    transform: translateY(50px);
+    z-index: 20;
+    position: fixed;
+    top: 45vh;
+    left: 5vw;
+    transform: translateY(-50%);
     transition: all 1s ease-out;
-    padding-top: 80px;
 }
 
-/* Estados del contenido */
 .content-after-expand.show {
     opacity: 1 !important;
     transform: translateY(0) !important;
@@ -218,16 +220,39 @@ body.scroll-enabled {
     transform: translateY(50px) !important;
 }
 
-.content-after-expand h1 {
+.content-after-expand h1, h2 {
     margin: 0;
-    font-size: 4rem;
-    text-align: center;
+    font-size: 3.5vw;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold; 
+    text-align: left;
 }
 
+
 .content-after-expand p {
-    margin: 1rem 0 0 0;
-    font-size: 2rem;
-    text-align: center;
+    margin: 0;
+    font-size: 1.8vw;
+    text-align: left;
+}
+.back_af_expand {
+    display: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #467746;
+    position: fixed;
+    z-index: 19;
+    animation: revelar-fondo 1s ease-out 0s 1 both;
+    animation-timeline: scroll(root);
+    animation-range: entry 70% exit 100%;
+}
+
+.back_af_expand img{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 .navigation-bar {
@@ -235,13 +260,13 @@ body.scroll-enabled {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 80px;
-    background: rgba(0, 127, 127, 0.9);
+    height: 7%;
+    background: #375f37;
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 52;
+    z-index: 21;
     opacity: 0;
     transform: translateY(-100px);
     transition: all 1s ease-out;
@@ -278,43 +303,34 @@ body.scroll-enabled {
 .nav-links li:nth-child(5) { animation-delay: 1.0s; }
 
 .nav-links a {
-    color: white;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     font-family: "Oswald", sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 400;
     padding: 10px 20px;
+    transition: transform 0.3s ease;
 }
 
-@keyframes nav-link-appear {
-    from { 
-        opacity: 0; 
-        transform: translateY(30px);
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0);
-    }
-}
-@keyframes estado-reposo {
-    0% { transform: translateY(0rem); }
-    50% { transform: translateY(-1rem); }
-    100% { transform: translateY(0rem); }
+.nav-links a:hover {
+    transform: translateY(-5px);
 }
 
-/* Animación de ola para el texto */
-@keyframes texto-ola {
-    0% { 
-        opacity: 0; 
-        transform: translateY(30px);
-    }
-    100% { 
-        opacity: 1; 
-        transform: translateY(0);
-    }
+.navigation-bar.show .nav-links li {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    animation: none !important;
 }
 
-/* Aplicar animación de ola a cada div de texto individualmente */
+#central {
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 0;
+    border-bottom: 0.2rem solid white;
+}
+
+
+
 .intro-page-right div:nth-child(1) {
     opacity: 0;
     animation: texto-ola 0.8s ease-out 8.5s forwards;
@@ -335,6 +351,81 @@ body.scroll-enabled {
     animation: texto-ola 0.8s ease-out 9.4s forwards;
 }
 
+.caja_HP {
+    
+    height: 70%;
+    position: fixed;
+    top: 20%;
+    left: 70%;
+    gap: 5rem;
+    z-index: 20;
+    animation: revelar-fondo 1s ease-out 0s 1 both;
+    animation-timeline: scroll(root);
+    animation-range: entry 70% exit 100%;
+    
+    /* Flexbox para posicionar los divs hijos */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Uno a la izquierda, otro a la derecha */
+    align-items: center; /* Centrar verticalmente si es necesario */
+}
+
+.caja_HP_child {
+    height: 25rem;
+    width: 25rem;
+    border-radius: 2rem;
+    font-size: 1.5rem;
+    
+    display: flex;
+    flex-direction: column; /* Los párrafos se apilan verticalmente */
+    justify-content: center; /* Centrar verticalmente todo el contenido */
+    align-items: center; /* Centrar horizontalmente */
+    text-align: center; /* Centrar el texto dentro de cada párrafo */
+    padding: 1rem; /* Padding general del contenedor */
+    box-sizing: border-box; /* Incluir padding en el tamaño total */
+    
+    /* Configuración de imagen de fondo */
+    background-size: cover; /* La imagen cubre todo el div */
+    background-position: center; /* Centrar la imagen */
+    background-repeat: no-repeat; /* No repetir la imagen */
+    
+    /* Overlay semitransparente para mejorar legibilidad del texto */
+    position: relative;
+}
+
+/* Sive parea Mejora la legibilidad del texto */
+.caja_HP_child::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Overlay negro semitransparente */
+    border-radius: 2rem; /* Mismo border-radius que el contenedor */
+    z-index: 1;
+}
+
+/* Asegurar que el texto esté por encima del overlay */
+.caja_HP_child p {
+    position: relative;
+    z-index: 2;
+    color: white; /* Cambiar color del texto a blanco para mejor contraste */
+}
+
+/* Clases específicas para cada imagen de fondo */
+.caja_HP_child.dicaprio {
+    background-image: url('./Images/dicaprio.jpg');
+}
+
+.caja_HP_child.wangari {
+    background-image: url('./Images/wangari.jpg');
+}
+
+.caja_HP_child:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out; /* Más rápida */
+}
 
 @keyframes expandirScroll {
     from { 
@@ -354,7 +445,7 @@ body.scroll-enabled {
 @keyframes revelar-fondo {
     from { 
         opacity: 0; 
-        transform: scale(0.8);
+        transform: scale(1);
     }
     to { 
         opacity: 1; 
@@ -410,4 +501,41 @@ body.scroll-enabled {
 @keyframes slide-from-left {
     from { transform: translateX(-150%) skew(10deg); }
     to { transform: translateX(0) skew(10deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+}
+
+@keyframes nav-link-appear {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+@keyframes estado-reposo {
+    0% { transform: translateY(0rem); }
+    50% { transform: translateY(-1rem); }
+    100% { transform: translateY(0rem); }
+}
+
+@keyframes texto-ola {
+    0% { 
+        opacity: 0; 
+        transform: translateY(30px);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
 }

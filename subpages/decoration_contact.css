@@ -1,0 +1,109 @@
+body {
+    overflow: hidden;
+    background-image: url('../Images/pexels-orlovamaria-4913478.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+ /*Parametros de la barra de navegacion*/
+.nav-links a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding: 10px 20px;
+    transition: transform 0.3s ease;
+}
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.nav-links a:hover {
+    transform: translateY(-5px);
+}
+.navigation-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 7%;
+    background: #375f37;
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 52;
+    opacity: 1;
+}
+#central {
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 0;
+    border-bottom: 0.2rem solid white;
+}
+
+
+.text_main {
+    position: absolute;
+    top: 15%;
+    left: 8%;
+    color: white;
+}
+
+.text_main h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 4rem;
+}
+
+.main_flex {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 40%;
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    backdrop-filter: blur(10px); /* Apply the blur effect */
+    padding: 1rem;
+    color: white;
+}
+
+.text_Herbert{
+    height: 100%;
+    width: 45%;
+    display: flex  ;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 2rem;
+}
+.text_Luis{
+    height: 100%;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 2rem;
+}
+
+.text_Herbert p{
+    font-size: 2rem;
+    padding: 0rem;
+    margin: 0;
+}
+
+.text_Luis p{
+    font-size: 2rem;
+    padding: 0rem;
+    margin: 0;
+}
