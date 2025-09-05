@@ -248,3 +248,189 @@ h1 {
     margin: 0;
     padding-bottom: 3rem;
 }
+
+/* Agregar estos estilos al final de decoration_recycle.css */
+
+/* Botón de login en la navegación */
+.login-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Estilos para la funcionalidad de admin */
+.admin-controls {
+    display: none;
+    background: linear-gradient(135deg, #4a7c59 0%, #2d5a3d 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(44, 85, 48, 0.3);
+}
+
+.admin-controls.show {
+    display: block;
+}
+
+.admin-header {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 1rem;
+}
+
+.admin-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.admin-section h3 {
+    color: #a6e22e;
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+}
+
+.edit-grid {
+    display: grid;
+    grid-template-columns: 1fr 100px 60px;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.edit-grid label {
+    color: white;
+    font-weight: 500;
+}
+
+.edit-grid input {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #4a7c4a;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 0.9rem;
+    color: #2c5530;
+}
+
+.edit-grid input:focus {
+    outline: none;
+    border-color: #a6e22e;
+    box-shadow: 0 0 5px rgba(166, 226, 46, 0.3);
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-family: "Oswald", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #a6e22e 0%, #66d9ef 100%);
+    color: #2d5a3d;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(166, 226, 46, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #66d9ef 0%, #4a90e2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 217, 239, 0.3);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #fd971f 0%, #f39c12 100%);
+    color: white;
+}
+
+.btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(253, 151, 31, 0.3);
+}
+
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #a6e22e 0%, #66d9ef 100%);
+    color: #2d5a3d;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    z-index: 1001;
+    transform: translateX(400px);
+    transition: transform 0.5s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.success-message.show {
+    transform: translateX(0);
+}
+
+.login-prompt {
+    background: rgba(249, 38, 114, 0.1);
+    border: 2px solid #f92672;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-prompt p {
+    color: #f92672;
+    margin: 0;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .edit-grid {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+    
+    .edit-grid label {
+        font-size: 0.9rem;
+    }
+    
+    .admin-controls {
+        padding: 1rem;
+        margin: 1rem;
+    }
+    
+    .admin-header {
+        font-size: 1.3rem;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        margin: 5px;
+    }
+}

@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="./Images/gg.png">
     <style>
-        /* Estilos del formulario de registro */
-        .registration-modal {
+        /* Estilos del formulario de registro y login */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -27,12 +27,12 @@
             transition: all 0.5s ease;
         }
 
-        .registration-modal.show {
+        .modal.show {
             opacity: 1;
             visibility: visible;
         }
 
-        .registration-form {
+        .modal-form {
             background: linear-gradient(135deg, #4a7c59 0%, #2d5a3d 100%);
             padding: 3rem;
             border-radius: 20px;
@@ -45,11 +45,11 @@
             overflow: hidden;
         }
 
-        .registration-modal.show .registration-form {
+        .modal.show .modal-form {
             transform: translateY(0) scale(1);
         }
 
-        .registration-form::before {
+        .modal-form::before {
             content: '';
             position: absolute;
             top: 0;
@@ -146,8 +146,6 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
         .btn-primary {
@@ -171,26 +169,14 @@
             transform: translateY(-2px);
         }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
+        .btn-danger {
+            background: linear-gradient(135deg, #f92672 0%, #e91e63 100%);
+            color: white;
         }
 
-        .loading-spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 8px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(249, 38, 114, 0.3);
         }
 
         .success-message {
@@ -245,9 +231,196 @@
             display: block;
         }
 
+        /* Panel de administración */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            overflow-y: auto;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .admin-panel.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .admin-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #2d5a3d 0%, #1a3a2a 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .admin-header h2 {
+            font-family: "Oswald", sans-serif;
+            font-size: 2.5rem;
+            margin: 0;
+            color: #a6e22e;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #a6e22e;
+            display: block;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .users-list {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #a6e22e;
+        }
+
+        .user-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .user-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #66d9ef;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Botón de login en la navegación */
+        .login-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: "Oswald", sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-admin {
+            background: #f92672;
+            color: white;
+        }
+
+        .status-user {
+            background: #66d9ef;
+            color: #2d5a3d;
+        }
+
+        /* Form switch buttons */
+        .form-switch {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .switch-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin: 0 1rem;
+            padding: 0.5rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .switch-btn.active {
+            color: #a6e22e;
+            border-bottom-color: #a6e22e;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
-            .registration-form {
+            .modal-form {
                 padding: 2rem;
                 margin: 1rem;
             }
@@ -259,10 +432,29 @@
             .form-buttons {
                 flex-direction: column;
             }
+
+            .admin-content {
+                padding: 1rem;
+                margin: 1rem;
+            }
+
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .user-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .user-actions {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Tu contenido original -->
     <div class="centro">
         <div class="centroizq">
             <p>Associated with</p>
@@ -290,28 +482,38 @@
         </div>
     </div>
 
-    <!-- Modal de Registro -->
-    <div class="registration-modal" id="registrationModal">
-        <form class="registration-form" id="registrationForm">
-            <button type="button" class="close-btn" onclick="closeRegistrationModal()">&times;</button>
+    <!-- Modal de Registro/Login -->
+    <div class="modal" id="authModal">
+        <!-- Formulario de Registro -->
+        <form class="modal-form" id="registrationForm">
+            <button type="button" class="close-btn" onclick="closeAuthModal()">&times;</button>
             
             <div class="form-header">
-                <h2>¡Únete a Reciclatón!</h2>
-                <p>Comienza tu viaje hacia un futuro más verde</p>
+                <h2 id="formTitle">¡Únete a Reciclatón!</h2>
+                <p id="formSubtitle">Comienza tu viaje hacia un futuro más verde</p>
             </div>
 
-            <div class="form-group">
-                <label for="firstName">Nombre *</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Tu nombre" required>
-                <div class="error-message">El nombre es requerido</div>
+            <div class="form-switch" id="formSwitch">
+                <button type="button" class="switch-btn active" data-form="register">Registrarse</button>
+                <button type="button" class="switch-btn" data-form="login">Iniciar Sesión</button>
             </div>
 
-            <div class="form-group">
-                <label for="lastName">Apellido *</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Tu apellido" required>
-                <div class="error-message">El apellido es requerido</div>
+            <!-- Campos de registro -->
+            <div class="registration-fields">
+                <div class="form-group">
+                    <label for="firstName">Nombre *</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Tu nombre" required>
+                    <div class="error-message">El nombre es requerido</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Apellido *</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Tu apellido" required>
+                    <div class="error-message">El apellido es requerido</div>
+                </div>
             </div>
 
+            <!-- Campos comunes -->
             <div class="form-group">
                 <label for="email">Correo Electrónico *</label>
                 <input type="email" id="email" name="email" placeholder="tu@email.com" required>
@@ -320,49 +522,70 @@
 
             <div class="form-group">
                 <label for="password">Contraseña *</label>
-                <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" required minlength="8">
+                <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" required>
                 <div class="error-message">La contraseña debe tener al menos 8 caracteres</div>
             </div>
 
-            <div class="form-group">
-                <label for="age">Edad *</label>
-                <input type="number" id="age" name="age" placeholder="Tu edad" min="13" max="120" required>
-                <div class="error-message">La edad debe estar entre 13 y 120 años</div>
-            </div>
+            <!-- Campos de registro adicionales -->
+            <div class="registration-fields">
+                <div class="form-group">
+                    <label for="age">Edad *</label>
+                    <input type="number" id="age" name="age" placeholder="Tu edad" min="13" max="120">
+                    <div class="error-message">La edad debe estar entre 13 y 120 años</div>
+                </div>
 
-            <div class="form-group">
-                <label for="location">Ubicación</label>
-                <select id="location" name="location">
-                    <option value="">Selecciona tu región</option>
-                    <option value="Lima">Lima</option>
-                    <option value="Arequipa">Arequipa</option>
-                    <option value="Trujillo">Trujillo</option>
-                    <option value="Chiclayo">Chiclayo</option>
-                    <option value="Piura">Piura</option>
-                    <option value="Iquitos">Iquitos</option>
-                    <option value="Cusco">Cusco</option>
-                    <option value="Huancayo">Huancayo</option>
-                    <option value="Tacna">Tacna</option>
-                    <option value="Otro">Otro</option>
-                </select>
+                <div class="form-group">
+                    <label for="location">Ubicación</label>
+                    <select id="location" name="location">
+                        <option value="">Selecciona tu región</option>
+                        <option value="Lima">Lima</option>
+                        <option value="Arequipa">Arequipa</option>
+                        <option value="Trujillo">Trujillo</option>
+                        <option value="Chiclayo">Chiclayo</option>
+                        <option value="Piura">Piura</option>
+                        <option value="Iquitos">Iquitos</option>
+                        <option value="Cusco">Cusco</option>
+                        <option value="Huancayo">Huancayo</option>
+                        <option value="Tacna">Tacna</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-buttons">
-                <button type="button" class="btn btn-secondary" onclick="closeRegistrationModal()">
+                <button type="button" class="btn btn-secondary" onclick="closeAuthModal()">
                     Cancelar
                 </button>
                 <button type="submit" class="btn btn-primary" id="submitBtn">
-                    <div class="loading-spinner" id="loadingSpinner"></div>
                     <span id="submitText">Registrarse</span>
                 </button>
             </div>
         </form>
     </div>
 
-    <!-- Fondo de color que aparece con el scroll -->
+    <!-- Panel de Administración -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Panel de Administración</h2>
+                <button type="button" class="btn btn-secondary" onclick="closeAdminPanel()" style="position: absolute; top: 2rem; right: 2rem;">
+                    Cerrar
+                </button>
+            </div>
+
+            <div class="admin-stats" id="adminStats">
+                <!-- Las estadísticas se cargarán aquí -->
+            </div>
+
+            <div class="users-list" id="adminUsersList">
+                <!-- Los usuarios se cargarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Tu contenido original continúa -->
     <div class="color-background"></div>
 
-    <!-- Contenido que aparece después de la expansión -->
     <div class="content-after-expand">
         <div>
             <h1>Bienvenido a un futuro más verde,</h1>
@@ -393,41 +616,151 @@
             <a href="./subpages/about.html">About</a>
             <a href="./subpages/recycle.html">Leaderboard</a>
             <a href="./subpages/contact.html">Contact</a>
+            <!-- Botón de login que se muestra siempre -->
+            <button class="login-btn" id="loginBtn" onclick="showLoginModal()">Login</button>
+            <!-- Botón de admin que aparece solo si eres admin -->
+            <a href="#admin" id="adminBtn" onclick="showAdminPanel()" style="display: none;">Admin</a>
         </ul>
     </div>
 
+    <!-- Incluir tu JavaScript original -->
     <script src="codigojava.js"></script>
+    
     <script>
-        // Función para mostrar el modal de registro después de la animación
-        function showRegistrationModal() {
-            const modal = document.getElementById('registrationModal');
-            modal.classList.add('show');
+        // ============ CONFIGURACIÓN DEL ADMIN ============
+        const ADMIN_EMAIL = "lastocazaj@gmail.com";  // CAMBIA ESTE EMAIL
+        const ADMIN_PASSWORD = "Reciclon2025";  // CAMBIA ESTA CONTRASEÑA
+
+        // ============ BASE DE DATOS LOCAL ============
+        class LocalDatabase {
+            constructor() {
+                this.users = JSON.parse(localStorage.getItem('reciclatonUsers') || '[]');
+                this.nextId = parseInt(localStorage.getItem('reciclatonNextId') || '1');
+                this.currentUser = JSON.parse(localStorage.getItem('reciclatonCurrentUser') || 'null');
+            }
+
+            saveUser(userData) {
+                if (this.users.find(user => user.email === userData.email)) {
+                    throw new Error('Este correo ya está registrado');
+                }
+
+                const newUser = {
+                    id: this.nextId++,
+                    ...userData,
+                    createdAt: new Date().toISOString(),
+                    recyclingPoints: 0,
+                    level: 'Beginner',
+                    isAdmin: userData.email === ADMIN_EMAIL
+                };
+
+                this.users.push(newUser);
+                this.save();
+                return newUser;
+            }
+
+            authenticate(email, password) {
+                const user = this.users.find(u => u.email === email);
+                
+                // Verificar admin hardcodeado
+                if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                    const adminUser = user || {
+                        id: 0,
+                        firstName: 'Admin',
+                        lastName: 'Sistema',
+                        email: ADMIN_EMAIL,
+                        isAdmin: true,
+                        createdAt: new Date().toISOString(),
+                        recyclingPoints: 0,
+                        level: 'Admin'
+                    };
+                    
+                    if (!user) {
+                        this.users.unshift(adminUser);
+                        this.save();
+                    }
+                    
+                    this.currentUser = adminUser;
+                    localStorage.setItem('reciclatonCurrentUser', JSON.stringify(adminUser));
+                    return adminUser;
+                }
+                
+                if (!user) {
+                    throw new Error('Usuario no encontrado');
+                }
+                
+                if (user.password !== password) {
+                    throw new Error('Contraseña incorrecta');
+                }
+                
+                this.currentUser = user;
+                localStorage.setItem('reciclatonCurrentUser', JSON.stringify(user));
+                return user;
+            }
+
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('reciclatonCurrentUser');
+            }
+
+            updateUser(userId, updates) {
+                const userIndex = this.users.findIndex(u => u.id === userId);
+                if (userIndex === -1) throw new Error('Usuario no encontrado');
+                
+                Object.assign(this.users[userIndex], updates);
+                this.save();
+                return this.users[userIndex];
+            }
+
+            deleteUser(userId) {
+                this.users = this.users.filter(u => u.id !== userId);
+                this.save();
+            }
+
+            save() {
+                localStorage.setItem('reciclatonUsers', JSON.stringify(this.users));
+                localStorage.setItem('reciclatonNextId', this.nextId.toString());
+            }
+
+            getAllUsers() {
+                return this.users;
+            }
+
+            isCurrentUserAdmin() {
+                return this.currentUser && this.currentUser.isAdmin;
+            }
+        }
+
+        const db = new LocalDatabase();
+        let currentForm = 'register';
+
+        // ============ FUNCIONES DE UI ============
+        function showAuthModal() {
+            document.getElementById('authModal').classList.add('show');
             document.body.style.overflow = 'hidden';
         }
 
-        // Función para cerrar el modal
-        function closeRegistrationModal() {
-            const modal = document.getElementById('registrationModal');
-            modal.classList.remove('show');
+        function showLoginModal() {
+            switchForm('login');
+            showAuthModal();
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('show');
             document.body.style.overflow = '';
             clearForm();
         }
 
-        // Función para limpiar el formulario
         function clearForm() {
-            const form = document.getElementById('registrationForm');
-            form.reset();
+            document.getElementById('registrationForm').reset();
             clearErrors();
         }
 
-        // Función para limpiar errores
         function clearErrors() {
             document.querySelectorAll('.form-group').forEach(group => {
                 group.classList.remove('error');
             });
         }
 
-        // Función para mostrar errores
         function showError(fieldId, message) {
             const group = document.getElementById(fieldId).closest('.form-group');
             group.classList.add('error');
@@ -435,34 +768,77 @@
             if (errorMsg) errorMsg.textContent = message;
         }
 
-        // Función para validar el formulario
-        function validateForm(formData) {
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+
+            setTimeout(() => successDiv.classList.add('show'), 100);
+            setTimeout(() => {
+                successDiv.classList.remove('show');
+                setTimeout(() => successDiv.remove(), 500);
+            }, 4000);
+        }
+
+        function switchForm(formType) {
+            currentForm = formType;
+            const registrationFields = document.querySelectorAll('.registration-fields');
+            const formTitle = document.getElementById('formTitle');
+            const formSubtitle = document.getElementById('formSubtitle');
+            const submitText = document.getElementById('submitText');
+            
+            // Actualizar botones de switch
+            document.querySelectorAll('.switch-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.form === formType);
+            });
+
+            if (formType === 'login') {
+                registrationFields.forEach(field => field.style.display = 'none');
+                formTitle.textContent = 'Iniciar Sesión';
+                formSubtitle.textContent = 'Accede a tu cuenta de Reciclatón';
+                submitText.textContent = 'Iniciar Sesión';
+                
+                // Hacer campos opcionales para login
+                document.getElementById('firstName').required = false;
+                document.getElementById('lastName').required = false;
+                document.getElementById('age').required = false;
+            } else {
+                registrationFields.forEach(field => field.style.display = 'block');
+                formTitle.textContent = '¡Únete a Reciclatón!';
+                formSubtitle.textContent = 'Comienza tu viaje hacia un futuro más verde';
+                submitText.textContent = 'Registrarse';
+                
+                // Hacer campos requeridos para registro
+                document.getElementById('firstName').required = true;
+                document.getElementById('lastName').required = true;
+                document.getElementById('age').required = true;
+            }
+        }
+
+        // ============ FUNCIONES DE VALIDACIÓN ============
+        function validateRegistration(formData) {
             let isValid = true;
             clearErrors();
 
-            // Validar nombre
             if (!formData.firstName.trim()) {
                 showError('firstName', 'El nombre es requerido');
                 isValid = false;
             }
 
-            // Validar apellido
             if (!formData.lastName.trim()) {
                 showError('lastName', 'El apellido es requerido');
                 isValid = false;
             }
 
-            // Validar email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!formData.email.trim()) {
                 showError('email', 'El correo es requerido');
                 isValid = false;
-            } else if (!emailRegex.test(formData.email)) {
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
                 showError('email', 'Ingresa un correo válido');
                 isValid = false;
             }
 
-            // Validar contraseña
             if (!formData.password) {
                 showError('password', 'La contraseña es requerida');
                 isValid = false;
@@ -471,11 +847,7 @@
                 isValid = false;
             }
 
-            // Validar edad
-            if (!formData.age) {
-                showError('age', 'La edad es requerida');
-                isValid = false;
-            } else if (formData.age < 13 || formData.age > 120) {
+            if (!formData.age || formData.age < 13 || formData.age > 120) {
                 showError('age', 'La edad debe estar entre 13 y 120 años');
                 isValid = false;
             }
@@ -483,105 +855,328 @@
             return isValid;
         }
 
-        // Función para mostrar mensaje de éxito
-        function showSuccessMessage(message) {
-            const successDiv = document.createElement('div');
-            successDiv.className = 'success-message';
-            successDiv.textContent = message;
-            document.body.appendChild(successDiv);
+        function validateLogin(formData) {
+            let isValid = true;
+            clearErrors();
 
-            setTimeout(() => successDiv.classList.add('show'), 100);
+            if (!formData.email.trim()) {
+                showError('email', 'El correo es requerido');
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+                showError('email', 'Ingresa un correo válido');
+                isValid = false;
+            }
 
-            setTimeout(() => {
-                successDiv.classList.remove('show');
-                setTimeout(() => successDiv.remove(), 500);
-            }, 4000);
+            if (!formData.password) {
+                showError('password', 'La contraseña es requerida');
+                isValid = false;
+            }
+
+            return isValid;
         }
 
-        // Manejar el envío del formulario
+        // ============ FUNCIONES DE ADMIN ============
+        function showAdminPanel() {
+            if (!db.isCurrentUserAdmin()) {
+                alert('No tienes permisos de administrador');
+                return;
+            }
+            
+            updateAdminPanel();
+            document.getElementById('adminPanel').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminPanel').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function updateAdminPanel() {
+            const users = db.getAllUsers();
+            
+            // Actualizar estadísticas
+            const statsHtml = `
+                <div class="stat-card">
+                    <span class="stat-number">${users.length}</span>
+                    <div class="stat-label">Total Usuarios</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">${users.filter(u => u.isAdmin).length}</span>
+                    <div class="stat-label">Administradores</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">${users.reduce((total, user) => total + (user.recyclingPoints || 0), 0)}</span>
+                    <div class="stat-label">Puntos Total</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">${users.filter(u => {
+                        const createdDate = new Date(u.createdAt);
+                        const today = new Date();
+                        return createdDate.toDateString() === today.toDateString();
+                    }).length}</span>
+                    <div class="stat-label">Registros Hoy</div>
+                </div>
+            `;
+            
+            document.getElementById('adminStats').innerHTML = statsHtml;
+            
+            // Actualizar lista de usuarios
+            const usersHtml = users.map(user => `
+                <div class="user-card" data-user-id="${user.id}">
+                    <div class="user-header">
+                        <div class="user-info">
+                            <div class="user-name">
+                                ${user.firstName} ${user.lastName}
+                                <span class="user-status ${user.isAdmin ? 'status-admin' : 'status-user'}">
+                                    ${user.isAdmin ? 'ADMIN' : 'USER'}
+                                </span>
+                            </div>
+                            <div class="user-details">
+                                <div>📧 ${user.email}</div>
+                                <div>🎂 ${user.age || 'N/A'} años</div>
+                                <div>📍 ${user.location || 'No especificado'}</div>
+                                <div>⭐ ${user.recyclingPoints || 0} puntos</div>
+                                <div>🏆 ${user.level || 'Beginner'}</div>
+                                <div>📅 ${new Date(user.createdAt).toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn btn-primary btn-small" onclick="editUser(${user.id})">
+                                ✏️ Editar
+                            </button>
+                            ${user.id !== 0 ? `<button class="btn btn-danger btn-small" onclick="deleteUser(${user.id})">
+                                🗑️ Eliminar
+                            </button>` : ''}
+                            <button class="btn btn-secondary btn-small" onclick="toggleAdmin(${user.id})">
+                                ${user.isAdmin ? '👤 Quitar Admin' : '🛡️ Hacer Admin'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('adminUsersList').innerHTML = `
+                <h3 style="margin-bottom: 1rem; color: #a6e22e;">👥 Lista de Usuarios (${users.length})</h3>
+                ${usersHtml || '<p style="text-align: center; opacity: 0.7;">No hay usuarios registrados.</p>'}
+            `;
+        }
+
+        function editUser(userId) {
+            const user = db.users.find(u => u.id === userId);
+            if (!user) return;
+
+            const newName = prompt('Nuevo nombre:', user.firstName);
+            const newLastName = prompt('Nuevo apellido:', user.lastName);
+            const newAge = prompt('Nueva edad:', user.age);
+            const newLocation = prompt('Nueva ubicación:', user.location);
+            const newPoints = prompt('Nuevos puntos de reciclaje:', user.recyclingPoints);
+
+            if (newName !== null || newLastName !== null || newAge !== null || newLocation !== null || newPoints !== null) {
+                const updates = {};
+                if (newName !== null && newName.trim()) updates.firstName = newName.trim();
+                if (newLastName !== null && newLastName.trim()) updates.lastName = newLastName.trim();
+                if (newAge !== null && !isNaN(newAge) && newAge >= 13) updates.age = parseInt(newAge);
+                if (newLocation !== null) updates.location = newLocation.trim() || null;
+                if (newPoints !== null && !isNaN(newPoints) && newPoints >= 0) updates.recyclingPoints = parseInt(newPoints);
+
+                try {
+                    db.updateUser(userId, updates);
+                    updateAdminPanel();
+                    showSuccessMessage('Usuario actualizado correctamente');
+                } catch (error) {
+                    alert('Error al actualizar usuario: ' + error.message);
+                }
+            }
+        }
+
+        function deleteUser(userId) {
+            if (userId === 0) {
+                alert('No se puede eliminar al administrador principal');
+                return;
+            }
+
+            const user = db.users.find(u => u.id === userId);
+            if (!user) return;
+
+            if (confirm(`¿Estás seguro de que quieres eliminar a ${user.firstName} ${user.lastName}?`)) {
+                try {
+                    db.deleteUser(userId);
+                    updateAdminPanel();
+                    showSuccessMessage('Usuario eliminado correctamente');
+                } catch (error) {
+                    alert('Error al eliminar usuario: ' + error.message);
+                }
+            }
+        }
+
+        function toggleAdmin(userId) {
+            if (userId === 0) {
+                alert('No se puede cambiar el rol del administrador principal');
+                return;
+            }
+
+            const user = db.users.find(u => u.id === userId);
+            if (!user) return;
+
+            const action = user.isAdmin ? 'quitar permisos de admin' : 'otorgar permisos de admin';
+            
+            if (confirm(`¿Estás seguro de que quieres ${action} a ${user.firstName} ${user.lastName}?`)) {
+                try {
+                    db.updateUser(userId, { isAdmin: !user.isAdmin });
+                    updateAdminPanel();
+                    showSuccessMessage(`Permisos actualizados correctamente`);
+                } catch (error) {
+                    alert('Error al actualizar permisos: ' + error.message);
+                }
+            }
+        }
+
+        function updateNavigationState() {
+            const loginBtn = document.getElementById('loginBtn');
+            const adminBtn = document.getElementById('adminBtn');
+            
+            if (db.currentUser) {
+                loginBtn.textContent = `👋 ${db.currentUser.firstName}`;
+                loginBtn.onclick = () => {
+                    if (confirm('¿Quieres cerrar sesión?')) {
+                        db.logout();
+                        updateNavigationState();
+                        showSuccessMessage('Sesión cerrada correctamente');
+                    }
+                };
+                
+                if (db.isCurrentUserAdmin()) {
+                    adminBtn.style.display = 'inline';
+                } else {
+                    adminBtn.style.display = 'none';
+                }
+            } else {
+                loginBtn.textContent = 'Login';
+                loginBtn.onclick = showLoginModal;
+                adminBtn.style.display = 'none';
+            }
+        }
+
+        // ============ MANEJO DE FORMULARIOS ============
         document.getElementById('registrationForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const submitBtn = document.getElementById('submitBtn');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const submitText = document.getElementById('submitText');
-
-            // Obtener datos del formulario
             const formData = {
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                email: document.getElementById('email').value,
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                email: document.getElementById('email').value.trim().toLowerCase(),
                 password: document.getElementById('password').value,
                 age: parseInt(document.getElementById('age').value),
                 location: document.getElementById('location').value || null
             };
 
-            // Validar formulario
-            if (!validateForm(formData)) {
-                return;
-            }
-
-            // Mostrar estado de carga
-            submitBtn.disabled = true;
-            loadingSpinner.style.display = 'inline-block';
-            submitText.textContent = 'Registrando...';
-
             try {
-                // Simular llamada a API (reemplazar con tu endpoint real)
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    showSuccessMessage('¡Registro exitoso! Bienvenido a Reciclatón');
-                    closeRegistrationModal();
+                if (currentForm === 'register') {
+                    if (!validateRegistration(formData)) return;
                     
-                    // Opcional: redirigir o realizar acciones adicionales
-                    setTimeout(() => {
-                        // window.location.href = '/dashboard';
-                    }, 2000);
-                } else {
-                    const error = await response.json();
-                    throw new Error(error.message || 'Error en el registro');
+                    const newUser = db.saveUser(formData);
+                    showSuccessMessage(`¡Registro exitoso! Bienvenido/a ${newUser.firstName}`);
+                    closeAuthModal();
+                    updateNavigationState();
+                    
+                } else if (currentForm === 'login') {
+                    if (!validateLogin(formData)) return;
+                    
+                    const user = db.authenticate(formData.email, formData.password);
+                    showSuccessMessage(`¡Bienvenido/a de vuelta, ${user.firstName}!`);
+                    closeAuthModal();
+                    updateNavigationState();
                 }
+
             } catch (error) {
                 console.error('Error:', error);
-                // Por ahora, simular éxito para demo
-                showSuccessMessage('¡Registro exitoso! Bienvenido a Reciclatón');
-                closeRegistrationModal();
-            } finally {
-                // Restaurar estado del botón
-                submitBtn.disabled = false;
-                loadingSpinner.style.display = 'none';
-                submitText.textContent = 'Registrarse';
+                if (error.message === 'Este correo ya está registrado') {
+                    showError('email', error.message);
+                } else if (error.message === 'Usuario no encontrado') {
+                    showError('email', error.message);
+                } else if (error.message === 'Contraseña incorrecta') {
+                    showError('password', error.message);
+                } else {
+                    alert('Error: ' + error.message);
+                }
             }
         });
 
-        // Mostrar el modal después de que termine la animación inicial (11 segundos)
-        setTimeout(() => {
-            // Solo mostrar si no viene de una subpágina
-            if (!sessionStorage.getItem('fromSubpage')) {
-                showRegistrationModal();
-            }
-        }, 11500);
+        // Event listeners para los botones de switch
+        document.querySelectorAll('.switch-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchForm(btn.dataset.form);
+                clearForm();
+            });
+        });
 
-        // Cerrar modal con tecla Escape
+        // ============ INICIALIZACIÓN ============
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNavigationState();
+            
+            // Auto-mostrar modal de registro después de la animación si no hay usuario logueado
+            setTimeout(() => {
+                if (!sessionStorage.getItem('fromSubpage') && !db.currentUser) {
+                    showAuthModal();
+                }
+            }, 11500);
+        });
+
+        // Cerrar modales con tecla Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                closeRegistrationModal();
+                closeAuthModal();
+                closeAdminPanel();
             }
         });
 
-        // Cerrar modal haciendo clic fuera del formulario
-        document.getElementById('registrationModal').addEventListener('click', (e) => {
+        // Cerrar modales haciendo clic fuera
+        document.getElementById('authModal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) {
-                closeRegistrationModal();
+                closeAuthModal();
             }
+        });
+
+        document.getElementById('adminPanel').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeAdminPanel();
+            }
+        });
+                // Verificar si viene de redirección desde recycle.html
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNavigationState();
+            
+            // Verificar redirección desde recycle
+            if (sessionStorage.getItem('redirectToRecycle') && db.currentUser && db.isCurrentUserAdmin()) {
+                // Si ya está logueado como admin, redirigir de vuelta
+                setTimeout(() => {
+                    sessionStorage.setItem('fromSubpage', 'true');
+                    window.location.href = './subpages/recycle.html';
+                }, 1000);
+                return;
+            }
+            
+            // Auto-mostrar modal de registro después de la animación si no hay usuario logueado
+            setTimeout(() => {
+                if (!sessionStorage.getItem('fromSubpage') && !db.currentUser) {
+                    showAuthModal();
+                }
+            }, 11500);
+        });
+
+        // Detectar login exitoso y redirigir si es necesario
+        const originalAuthFunction = document.getElementById('registrationForm').onsubmit;
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            // ... el código existente del formulario ...
+            
+            // Después del login/registro exitoso, verificar redirección
+            setTimeout(() => {
+                if (sessionStorage.getItem('redirectToRecycle') && db.currentUser && db.isCurrentUserAdmin()) {
+                    sessionStorage.setItem('fromSubpage', 'true');
+                    window.location.href = './subpages/recycle.html';
+                }
+            }, 1500);
         });
     </script>
 </body>

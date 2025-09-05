@@ -1,10 +1,12 @@
+//leaderboard.js
 console.log("Iniciando aplicación...");
 
 function addDebugMessage(message) {
     console.log(message);
 }
 
-const leaderboardData = {
+// Datos originales del leaderboard
+const originalLeaderboardData = {
     '8vo': {
         labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
         values: [100, 60, 12, 17]
@@ -27,12 +29,35 @@ const leaderboardData = {
     }
 };
 
+// Función para obtener los datos del leaderboard (prioriza datos personalizados)
+function getLeaderboardData() {
+    const customData = localStorage.getItem('customLeaderboardData');
+    
+    if (customData) {
+        try {
+            const parsedData = JSON.parse(customData);
+            addDebugMessage("Usando datos personalizados del localStorage");
+            return parsedData;
+        } catch (error) {
+            addDebugMessage("Error al parsear datos personalizados, usando datos originales");
+            console.error("Error parsing custom data:", error);
+            return originalLeaderboardData;
+        }
+    }
+    
+    addDebugMessage("Usando datos originales");
+    return originalLeaderboardData;
+}
+
 const barColors = ['#4a7c4a', '#5a8c5a', '#6a9c6a', '#7aac7a'];
 
 function createChart(category) {
     addDebugMessage(`=== CREANDO GRÁFICO PARA: ${category} ===`);
     
+    // Usar la función getLeaderboardData() en lugar de la variable directa
+    const leaderboardData = getLeaderboardData();
     const data = leaderboardData[category];
+    
     if (!data) {
         addDebugMessage(`ERROR: No datos para ${category}`);
         return;
@@ -63,6 +88,9 @@ function createChart(category) {
     } else {
         yMax = Math.ceil(maxValue / 50) * 50;
     }
+
+    // Asegurar un mínimo razonable para el eje Y
+    if (yMax < 20) yMax = 20;
 
     addDebugMessage(`Máximo: ${maxValue}kg, Eje Y: 0-${yMax}kg`);
 
@@ -122,6 +150,21 @@ function createChart(category) {
     addDebugMessage(`Gráfico completado para ${category}`);
 }
 
+// Función para verificar si hay cambios en los datos y actualizar el gráfico automáticamente
+function watchDataChanges() {
+    let lastDataString = localStorage.getItem('customLeaderboardData');
+    
+    setInterval(() => {
+        const currentDataString = localStorage.getItem('customLeaderboardData');
+        if (currentDataString !== lastDataString) {
+            lastDataString = currentDataString;
+            const currentCategory = document.getElementById('gradeSelector').value;
+            addDebugMessage('Datos actualizados, refrescando gráfico...');
+            createChart(currentCategory);
+        }
+    }, 1000);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     addDebugMessage('DOM cargado');
     
@@ -139,5 +182,34 @@ document.addEventListener('DOMContentLoaded', function() {
         createChart(e.target.value);
     });
 
+    // Iniciar el monitor de cambios de datos
+    watchDataChanges();
+
     addDebugMessage('Sistema inicializado correctamente');
 });
+
+// Función adicional para exportar datos (útil para debugging)
+function exportLeaderboardData() {
+    const data = getLeaderboardData();
+    const dataStr = JSON.stringify(data, null, 2);
+    console.log("Datos actuales del leaderboard:", dataStr);
+    return data;
+}
+
+// Función adicional para importar datos desde un objeto (útil para debugging)
+function importLeaderboardData(newData) {
+    try {
+        localStorage.setItem('customLeaderboardData', JSON.stringify(newData));
+        addDebugMessage('Datos importados correctamente');
+        const currentCategory = document.getElementById('gradeSelector').value;
+        createChart(currentCategory);
+        return true;
+    } catch (error) {
+        addDebugMessage('Error al importar datos: ' + error.message);
+        return false;
+    }
+}
+
+// Hacer estas funciones disponibles globalmente para debugging
+window.exportLeaderboardData = exportLeaderboardData;
+window.importLeaderboardData = importLeaderboardData;

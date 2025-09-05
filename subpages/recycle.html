@@ -7,6 +7,158 @@
     <link rel="stylesheet" href="decoration_recycle.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <script src="leaderboard.js" defer></script>
+    <style>
+        /* Estilos para la funcionalidad de admin */
+        .admin-controls {
+            display: none;
+            background: linear-gradient(135deg, #4a7c59 0%, #2d5a3d 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(44, 85, 48, 0.3);
+        }
+
+        .admin-controls.show {
+            display: block;
+        }
+
+        .admin-header {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .admin-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .admin-section h3 {
+            color: #a6e22e;
+            margin: 0 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .edit-grid {
+            display: grid;
+            grid-template-columns: 1fr 100px 60px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .edit-grid label {
+            color: white;
+            font-weight: 500;
+        }
+
+        .edit-grid input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #4a7c4a;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 0.9rem;
+            color: #2c5530;
+        }
+
+        .edit-grid input:focus {
+            outline: none;
+            border-color: #a6e22e;
+            box-shadow: 0 0 5px rgba(166, 226, 46, 0.3);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            font-family: "Oswald", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #a6e22e 0%, #66d9ef 100%);
+            color: #2d5a3d;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(166, 226, 46, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #66d9ef 0%, #4a90e2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 217, 239, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #fd971f 0%, #f39c12 100%);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(253, 151, 31, 0.3);
+        }
+
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #a6e22e 0%, #66d9ef 100%);
+            color: #2d5a3d;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-family: "Oswald", sans-serif;
+            font-weight: 500;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .success-message.show {
+            transform: translateX(0);
+        }
+
+        .login-prompt {
+            background: rgba(249, 38, 114, 0.1);
+            border: 2px solid #f92672;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-prompt p {
+            color: #f92672;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .edit-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .edit-grid label {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="navigation-bar">
@@ -15,11 +167,41 @@
             <a href="./about.html">About</a>
             <a id="central" href="./recycle.html">Leaderboard</a>
             <a href="./contact.html">Contact</a>
+            <!-- Botón de login/usuario -->
+            <button class="login-btn" id="loginBtn" onclick="handleLoginClick()">Login</button>
         </ul>
     </div>
 
     <div class="container">
-        <h1>Leaderboard - Recolección de Chapitas</h1>    
+        <h1>Leaderboard - Recolección de Chapitas</h1>
+
+        <!-- Panel de Administración para editar datos -->
+        <div class="admin-controls" id="adminControls">
+            <div class="admin-header">
+                🛡️ Panel de Administración - Editor de Datos del Leaderboard
+            </div>
+
+            <div class="admin-section">
+                <h3>📊 Editar Datos por Grado</h3>
+                <div id="dataEditor">
+                    <!-- Los controles de edición se cargarán aquí -->
+                </div>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button class="btn btn-success" onclick="saveAllData()">
+                        💾 Guardar Todos los Cambios
+                    </button>
+                    <button class="btn btn-warning" onclick="resetAllData()" style="margin-left: 1rem;">
+                        🔄 Restaurar Datos Originales
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensaje para usuarios no admin -->
+        <div class="login-prompt" id="loginPrompt" style="display: none;">
+            <p>🔒 Para editar los datos del leaderboard, necesitas iniciar sesión con una cuenta de administrador en la página principal.</p>
+        </div>
+    
         <div class="dropdown-container">
             <select id="gradeSelector" class="grade-dropdown">
                 <option value="8vo">8vo Grado</option>
@@ -69,5 +251,192 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Funciones de utilidad para mostrar mensajes
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+
+            setTimeout(() => successDiv.classList.add('show'), 100);
+            setTimeout(() => {
+                successDiv.classList.remove('show');
+                setTimeout(() => successDiv.remove(), 500);
+            }, 4000);
+        }
+
+        // Función para manejar el click del botón de login
+        function handleLoginClick() {
+            // Redirigir a la página principal para hacer login
+            sessionStorage.setItem('redirectToRecycle', 'true');
+            window.location.href = '../homepage.html';
+        }
+
+        // Verificar estado de administrador al cargar la página
+        function checkAdminStatus() {
+            const currentUser = JSON.parse(localStorage.getItem('reciclatonCurrentUser') || 'null');
+            const loginBtn = document.getElementById('loginBtn');
+            const adminControls = document.getElementById('adminControls');
+            const loginPrompt = document.getElementById('loginPrompt');
+
+            if (currentUser && currentUser.isAdmin) {
+                // Usuario es admin
+                loginBtn.textContent = `👋 ${currentUser.firstName}`;
+                loginBtn.onclick = () => {
+                    if (confirm('¿Quieres cerrar sesión?')) {
+                        localStorage.removeItem('reciclatonCurrentUser');
+                        showSuccessMessage('Sesión cerrada correctamente');
+                        checkAdminStatus(); // Recargar estado
+                    }
+                };
+                adminControls.classList.add('show');
+                loginPrompt.style.display = 'none';
+                setupDataEditor();
+            } else if (currentUser) {
+                // Usuario normal (no admin)
+                loginBtn.textContent = `👋 ${currentUser.firstName}`;
+                loginBtn.onclick = () => {
+                    if (confirm('¿Quieres cerrar sesión?')) {
+                        localStorage.removeItem('reciclatonCurrentUser');
+                        showSuccessMessage('Sesión cerrada correctamente');
+                        checkAdminStatus(); // Recargar estado
+                    }
+                };
+                adminControls.classList.remove('show');
+                loginPrompt.style.display = 'block';
+            } else {
+                // Sin sesión
+                loginBtn.textContent = 'Login';
+                loginBtn.onclick = handleLoginClick;
+                adminControls.classList.remove('show');
+                loginPrompt.style.display = 'block';
+            }
+        }
+
+        // Configurar el editor de datos
+        function setupDataEditor() {
+            const dataEditor = document.getElementById('dataEditor');
+            const categories = ['8vo', '9no', '10mo', '11vo', 'promociones'];
+            
+            dataEditor.innerHTML = categories.map(category => {
+                const data = getLeaderboardData()[category];
+                const categoryTitle = category === 'promociones' ? 'Promociones' : `${category} Grado`;
+                
+                return `
+                    <div class="admin-section" style="background: rgba(255, 255, 255, 0.05); margin-bottom: 1.5rem;">
+                        <h3>${categoryTitle}</h3>
+                        ${data.labels.map((label, index) => `
+                            <div class="edit-grid">
+                                <label>${label}:</label>
+                                <input type="number" 
+                                       id="${category}_${index}" 
+                                       value="${data.values[index]}" 
+                                       min="0" 
+                                       step="1">
+                                <span style="color: white;">kg</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Guardar todos los datos
+        function saveAllData() {
+            const categories = ['8vo', '9no', '10mo', '11vo', 'promociones'];
+            const newData = {};
+            
+            categories.forEach(category => {
+                const data = getLeaderboardData()[category];
+                const newValues = [];
+                
+                data.labels.forEach((label, index) => {
+                    const input = document.getElementById(`${category}_${index}`);
+                    const value = parseInt(input.value) || 0;
+                    newValues.push(value);
+                });
+                
+                newData[category] = {
+                    labels: data.labels,
+                    values: newValues
+                };
+            });
+            
+            // Guardar en localStorage
+            localStorage.setItem('customLeaderboardData', JSON.stringify(newData));
+            
+            // Actualizar el gráfico actual
+            const currentCategory = document.getElementById('gradeSelector').value;
+            createChart(currentCategory);
+            
+            showSuccessMessage('📊 Datos guardados correctamente y gráfico actualizado');
+        }
+
+        // Restaurar datos originales
+        function resetAllData() {
+            if (confirm('¿Estás seguro de que quieres restaurar todos los datos a sus valores originales? Esta acción no se puede deshacer.')) {
+                localStorage.removeItem('customLeaderboardData');
+                setupDataEditor();
+                
+                const currentCategory = document.getElementById('gradeSelector').value;
+                createChart(currentCategory);
+                
+                showSuccessMessage('🔄 Datos restaurados a valores originales');
+            }
+        }
+
+        // Función para obtener los datos del leaderboard (modificada para usar datos personalizados)
+        function getLeaderboardData() {
+            const customData = localStorage.getItem('customLeaderboardData');
+            
+            if (customData) {
+                return JSON.parse(customData);
+            }
+            
+            // Datos originales como respaldo
+            return {
+                '8vo': {
+                    labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
+                    values: [100, 60, 12, 17]
+                },
+                '9no': {
+                    labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'], 
+                    values: [48, 35, 44, 39]
+                },
+                '10mo': {
+                    labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
+                    values: [42, 47, 38, 45]
+                },
+                '11vo': {
+                    labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
+                    values: [51, 43, 49, 46]
+                },
+                'promociones': {
+                    labels: ['8vo Grado', '9no Grado', '10mo Grado', '11vo Grado'],
+                    values: [129, 166, 172, 189]
+                }
+            };
+        }
+
+        // Inicializar al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminStatus();
+            
+            // Verificar si viene de redirección después de login
+            if (sessionStorage.getItem('redirectToRecycle')) {
+                sessionStorage.removeItem('redirectToRecycle');
+                showSuccessMessage('¡Bienvenido al panel de administración del Leaderboard!');
+            }
+        });
+
+        // Actualizar el editor cuando cambie la categoría seleccionada
+        document.getElementById('gradeSelector').addEventListener('change', function() {
+            if (document.getElementById('adminControls').classList.contains('show')) {
+                setupDataEditor();
+            }
+        });
+    </script>
 </body>
 </html>
