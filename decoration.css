@@ -12,9 +12,7 @@ body.scroll-enabled {
     overflow: auto;
 }
 
-/* Añadir al final de decoration.css */
-
-/* Ocultar barras de scroll completamente */
+/* Ocultar barras de scroll */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
     display: none !important;
@@ -282,6 +280,19 @@ body {
     transform: translateY(-100px) !important;
 }
 
+.linc_deco {
+    position: fixed;
+    left: 10%;
+    background-color: white;
+    border-radius: 1rem;
+    opacity: 0.7;
+}
+
+.linc_deco img {
+    height: 6vh;
+    width: auto;
+}
+
 .nav-links {
     display: flex;
     gap: 3rem;
@@ -363,11 +374,10 @@ body {
     animation-timeline: scroll(root);
     animation-range: entry 70% exit 100%;
     
-    /* Flexbox para posicionar los divs hijos */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Uno a la izquierda, otro a la derecha */
-    align-items: center; /* Centrar verticalmente si es necesario */
+    justify-content: space-between;
+    align-items: center;
 }
 
 .caja_HP_child {
@@ -375,21 +385,16 @@ body {
     width: 25rem;
     border-radius: 2rem;
     font-size: 1.5rem;
-    
     display: flex;
-    flex-direction: column; /* Los párrafos se apilan verticalmente */
-    justify-content: center; /* Centrar verticalmente todo el contenido */
-    align-items: center; /* Centrar horizontalmente */
-    text-align: center; /* Centrar el texto dentro de cada párrafo */
-    padding: 1rem; /* Padding general del contenedor */
-    box-sizing: border-box; /* Incluir padding en el tamaño total */
-    
-    /* Configuración de imagen de fondo */
-    background-size: cover; /* La imagen cubre todo el div */
-    background-position: center; /* Centrar la imagen */
-    background-repeat: no-repeat; /* No repetir la imagen */
-    
-    /* Overlay semitransparente para mejorar legibilidad del texto */
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    text-align: center; 
+    padding: 1rem;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
     position: relative;
 }
 
@@ -401,16 +406,16 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Overlay negro semitransparente */
-    border-radius: 2rem; /* Mismo border-radius que el contenedor */
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 2rem;
     z-index: 1;
 }
 
-/* Asegurar que el texto esté por encima del overlay */
+
 .caja_HP_child p {
     position: relative;
     z-index: 2;
-    color: white; /* Cambiar color del texto a blanco para mejor contraste */
+    color: white;
 }
 
 /* Clases específicas para cada imagen de fondo */
@@ -424,7 +429,7 @@ body {
 
 .caja_HP_child:hover {
     transform: scale(1.1);
-    transition: transform 0.2s ease-in-out; /* Más rápida */
+    transition: transform 0.2s ease-in-out;
 }
 
 @keyframes expandirScroll {
@@ -538,4 +543,546 @@ body {
 @keyframes pulse {
     0%, 100% { opacity: 0.7; transform: translateX(-50%) translateY(0); }
     50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+}
+
+/* Estilos del formulario de registro y login */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-form {
+    background: linear-gradient(135deg, #4a7c59 0%, #2d5a3d 100%);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 450px;
+    width: 90%;
+    transform: translateY(50px) scale(0.9);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal.show .modal-form {
+    transform: translateY(0) scale(1);
+}
+
+.modal-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #66d9ef, #a6e22e, #f92672, #fd971f);
+    background-size: 400% 400%;
+    animation: gradient-flow 3s ease infinite;
+}
+
+@keyframes gradient-flow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.form-header h2 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    color: white;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #a6e22e;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(166, 226, 46, 0.3);
+}
+
+.form-group select option {
+    background: #2d5a3d;
+    color: white;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #a6e22e 0%, #66d9ef 100%);
+    color: #2d5a3d;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(166, 226, 46, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f92672 0%, #e91e63 100%);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(249, 38, 114, 0.3);
+}
+
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #a6e22e 0%, #66d9ef 100%);
+    color: #2d5a3d;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    z-index: 1001;
+    transform: translateX(400px);
+    transition: transform 0.5s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.success-message.show {
+    transform: translateX(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+}
+
+.form-group.error input {
+    border-color: #f92672;
+    background: rgba(249, 38, 114, 0.1);
+}
+
+.error-message {
+    color: #f92672;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.form-group.error .error-message {
+    display: block;
+}
+
+/* Panel de administración */
+.admin-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.admin-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.admin-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #2d5a3d 0%, #1a3a2a 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    color: white;
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 1rem;
+    position: relative;
+}
+
+.admin-header h2 {
+    font-family: "Oswald", sans-serif;
+    font-size: 2.5rem;
+    margin: 0;
+    color: #a6e22e;
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #a6e22e;
+    display: block;
+}
+
+.stat-label {
+    opacity: 0.8;
+    margin-top: 0.5rem;
+}
+
+.users-list {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.user-card {
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #a6e22e;
+    transition: all 0.3s ease;
+}
+
+.user-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+.user-card:last-child {
+    margin-bottom: 0;
+}
+
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #66d9ef;
+    margin-bottom: 0.5rem;
+}
+
+.user-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.user-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    min-width: auto;
+    flex: none;
+}
+
+/* Botón de login en la navegación */
+.login-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Estilos de estado de usuario mejorados */
+.user-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Colores específicos para cada rol */
+.status-superadmin {
+    background: linear-gradient(135deg, #f92672 0%, #e91e63 100%);
+    color: white;
+    border: 2px solid #f92672;
+    animation: superadmin-glow 2s ease-in-out infinite alternate;
+}
+
+.status-admin {
+    background: linear-gradient(135deg, #fd971f 0%, #f39c12 100%);
+    color: white;
+    border: 2px solid #fd971f;
+}
+
+.status-user {
+    background: linear-gradient(135deg, #66d9ef 0%, #4a90e2 100%);
+    color: white;
+    border: 2px solid #66d9ef;
+}
+
+/* Animación especial para Superadmin */
+@keyframes superadmin-glow {
+    from {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(249, 38, 114, 0.3);
+    }
+    to {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 20px rgba(249, 38, 114, 0.6);
+    }
+}
+
+/* Form switch buttons */
+.form-switch {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.switch-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin: 0 1rem;
+    padding: 0.5rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.switch-btn.active {
+    color: #a6e22e;
+    border-bottom-color: #a6e22e;
+}
+
+.switch-btn:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Estilos para botones de acción mejorados */
+.btn-promote {
+    background: linear-gradient(135deg, #a6e22e 0%, #66d9ef 100%);
+    color: #2d5a3d;
+}
+
+.btn-promote:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(166, 226, 46, 0.3);
+}
+
+.btn-demote {
+    background: linear-gradient(135deg, #fd971f 0%, #f39c12 100%);
+    color: white;
+}
+
+.btn-demote:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(253, 151, 31, 0.3);
+}
+
+/* Indicadores especiales para el Superadmin */
+.superadmin-indicator {
+    background: linear-gradient(135deg, #f92672 0%, #e91e63 100%);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+    animation: superadmin-pulse 2s ease-in-out infinite;
+}
+
+@keyframes superadmin-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-form {
+        padding: 2rem;
+        margin: 1rem;
+    }
+
+    .form-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .admin-content {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .user-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .user-actions {
+        justify-content: center;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .user-card {
+        padding: 1rem;
+    }
+
+    .user-details {
+        grid-template-columns: 1fr;
+    }
 }

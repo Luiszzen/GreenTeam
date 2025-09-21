@@ -170,6 +170,9 @@
             <!-- Botón de login/usuario -->
             <button class="login-btn" id="loginBtn" onclick="handleLoginClick()">Login</button>
         </ul>
+        <div class="linc_deco">
+            <img src="../Images/footer-logo-1.png" alt="Logo de Lincoln">
+        </div>
     </div>
 
     <div class="container">
@@ -178,20 +181,20 @@
         <!-- Panel de Administración para editar datos -->
         <div class="admin-controls" id="adminControls">
             <div class="admin-header">
-                🛡️ Panel de Administración - Editor de Datos del Leaderboard
+                Panel de Administración - Editor de Datos del Leaderboard
             </div>
 
             <div class="admin-section">
-                <h3>📊 Editar Datos por Grado</h3>
+                <h3>Editar Datos por Grado</h3>
                 <div id="dataEditor">
                     <!-- Los controles de edición se cargarán aquí -->
                 </div>
                 <div style="text-align: center; margin-top: 1.5rem;">
                     <button class="btn btn-success" onclick="saveAllData()">
-                        💾 Guardar Todos los Cambios
+                        Guardar Todos los Cambios
                     </button>
                     <button class="btn btn-warning" onclick="resetAllData()" style="margin-left: 1rem;">
-                        🔄 Restaurar Datos Originales
+                        Restaurar Datos Originales
                     </button>
                 </div>
             </div>
@@ -199,11 +202,13 @@
 
         <!-- Mensaje para usuarios no admin -->
         <div class="login-prompt" id="loginPrompt" style="display: none;">
-            <p>🔒 Para editar los datos del leaderboard, necesitas iniciar sesión con una cuenta de administrador en la página principal.</p>
+            <p>Para editar los datos del leaderboard, necesitas iniciar sesión con una cuenta de administrador en la página principal.</p>
         </div>
     
         <div class="dropdown-container">
             <select id="gradeSelector" class="grade-dropdown">
+                <option value="6to">6to Grado</option>
+                <option value="7mo">7mo Grado</option>
                 <option value="8vo">8vo Grado</option>
                 <option value="9no">9no Grado</option>
                 <option value="10mo">10mo Grado</option>
@@ -283,7 +288,7 @@
 
             if (currentUser && currentUser.isAdmin) {
                 // Usuario es admin
-                loginBtn.textContent = `👋 ${currentUser.firstName}`;
+                loginBtn.textContent = `Cerrar sesión`;
                 loginBtn.onclick = () => {
                     if (confirm('¿Quieres cerrar sesión?')) {
                         localStorage.removeItem('reciclatonCurrentUser');
@@ -296,7 +301,7 @@
                 setupDataEditor();
             } else if (currentUser) {
                 // Usuario normal (no admin)
-                loginBtn.textContent = `👋 ${currentUser.firstName}`;
+                loginBtn.textContent = `Cerrar sesión`;
                 loginBtn.onclick = () => {
                     if (confirm('¿Quieres cerrar sesión?')) {
                         localStorage.removeItem('reciclatonCurrentUser');
@@ -318,7 +323,7 @@
         // Configurar el editor de datos
         function setupDataEditor() {
             const dataEditor = document.getElementById('dataEditor');
-            const categories = ['8vo', '9no', '10mo', '11vo', 'promociones'];
+            const categories = ['6to', '7mo', '8vo', '9no', '10mo', '11vo', 'promociones'];
             
             dataEditor.innerHTML = categories.map(category => {
                 const data = getLeaderboardData()[category];
@@ -345,7 +350,7 @@
 
         // Guardar todos los datos
         function saveAllData() {
-            const categories = ['8vo', '9no', '10mo', '11vo', 'promociones'];
+            const categories = ['6to', '7mo', '8vo', '9no', '10mo', '11vo', 'promociones'];
             const newData = {};
             
             categories.forEach(category => {
@@ -387,7 +392,7 @@
             }
         }
 
-        // Función para obtener los datos del leaderboard (modificada para usar datos personalizados)
+        // Función para obtener los datos del leaderboard (modificada para incluir 6to y 7mo grado)
         function getLeaderboardData() {
             const customData = localStorage.getItem('customLeaderboardData');
             
@@ -395,8 +400,16 @@
                 return JSON.parse(customData);
             }
             
-            // Datos originales como respaldo
+            // Datos originales como respaldo (incluyendo 6to y 7mo grado)
             return {
+                '6to': {
+                    labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
+                    values: [25, 18, 30, 22]
+                },
+                '7mo': {
+                    labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
+                    values: [45, 38, 41, 35]
+                },
                 '8vo': {
                     labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
                     values: [100, 60, 12, 17]
@@ -414,8 +427,8 @@
                     values: [51, 43, 49, 46]
                 },
                 'promociones': {
-                    labels: ['8vo Grado', '9no Grado', '10mo Grado', '11vo Grado'],
-                    values: [129, 166, 172, 189]
+                    labels: ['6to Grado', '7mo Grado', '8vo Grado', '9no Grado', '10mo Grado', '11vo Grado'],
+                    values: [95, 159, 189, 166, 172, 189]
                 }
             };
         }

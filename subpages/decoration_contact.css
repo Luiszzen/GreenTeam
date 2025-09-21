@@ -8,7 +8,7 @@ body {
     padding: 0;
     min-height: 100vh;
 }
- /*Parametros de la barra de navegacion*/
+
 .nav-links a {
     color: rgb(255, 255, 255);
     text-decoration: none;
@@ -71,8 +71,8 @@ body {
     transform: translate(-50%, -50%);
     height: 40%;
     width: 80%;
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
-    backdrop-filter: blur(10px); /* Apply the blur effect */
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
     padding: 1rem;
     color: white;
 }
@@ -106,4 +106,17 @@ body {
     font-size: 2rem;
     padding: 0rem;
     margin: 0;
+}
+
+.linc_deco {
+    position: fixed;
+    left: 10%;
+    background-color: white;
+    border-radius: 1rem;
+    opacity: 0.7;
+}
+
+.linc_deco img {
+    height: 6vh;
+    width: auto;
 }

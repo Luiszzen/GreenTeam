@@ -32,3 +32,4 @@ window.addEventListener("scroll", () => {
         }}
         rotateCards();
 });
+

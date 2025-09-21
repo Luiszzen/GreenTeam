@@ -5,8 +5,15 @@ function addDebugMessage(message) {
     console.log(message);
 }
 
-// Datos originales del leaderboard
 const originalLeaderboardData = {
+    '6to': {
+        labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
+        values: [25, 18, 30, 22]
+    },
+    '7mo': {
+        labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
+        values: [45, 38, 41, 35]
+    },
     '8vo': {
         labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
         values: [100, 60, 12, 17]
@@ -24,8 +31,8 @@ const originalLeaderboardData = {
         values: [51, 43, 49, 46]
     },
     'promociones': {
-        labels: ['8vo Grado', '9no Grado', '10mo Grado', '11vo Grado'],
-        values: [129, 166, 172, 189]
+        labels: ['6to Grado', '7mo Grado', '8vo Grado', '9no Grado', '10mo Grado', '11vo Grado'],
+        values: [95, 159, 189, 166, 172, 189]
     }
 };
 
@@ -49,7 +56,7 @@ function getLeaderboardData() {
     return originalLeaderboardData;
 }
 
-const barColors = ['#4a7c4a', '#5a8c5a', '#6a9c6a', '#7aac7a'];
+const barColors = ['#4a7c4a', '#5a8c5a', '#6a9c6a', '#7aac7a', '#8abc8a', '#9acc9a'];
 
 function createChart(category) {
     addDebugMessage(`=== CREANDO GRÁFICO PARA: ${category} ===`);
@@ -174,8 +181,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    addDebugMessage('Iniciando con 8vo grado...');
-    createChart('8vo');
+    addDebugMessage('Iniciando con 6to grado...');
+    createChart('6to');
 
     selector.addEventListener('change', function(e) {
         addDebugMessage(`Cambiando a: ${e.target.value}`);
