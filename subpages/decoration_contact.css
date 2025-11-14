@@ -9,6 +9,35 @@ body {
     min-height: 100vh;
 }
 
+.navigation-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    min-height: 7%; /* Cambiado de height a min-height */
+    height: auto; /* Permite que crezca automáticamente */
+    background: #375f37;
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0; /* Agrega padding vertical */
+    z-index: 52;
+    opacity: 1;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos bajen de línea */
+    gap: 2rem; /* Reducido de 3rem a 2rem */
+    justify-content: center; /* Centra los elementos */
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 1rem; /* Padding para evitar que toquen los bordes */
+    max-width: 100%;
+}
+
 .nav-links a {
     color: rgb(255, 255, 255);
     text-decoration: none;
@@ -17,31 +46,13 @@ body {
     font-weight: 400;
     padding: 10px 20px;
     transition: transform 0.3s ease;
+    white-space: nowrap; /* Evita que el texto se rompa */
 }
-.nav-links {
-    display: flex;
-    gap: 3rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+
 .nav-links a:hover {
     transform: translateY(-5px);
 }
-.navigation-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 7%;
-    background: #375f37;
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 52;
-    opacity: 1;
-}
+
 #central {
     padding-left: 2px;
     padding-right: 2px;
@@ -49,12 +60,27 @@ body {
     border-bottom: 0.2rem solid white;
 }
 
+/* Media queries para ajustar en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .nav-links a {
+        font-size: 1.2rem;
+        padding: 8px 15px;
+    }
+}
 
-.text_main {
-    position: absolute;
-    top: 15%;
-    left: 8%;
-    color: white;
+@media (max-width: 480px) {
+    .nav-links {
+        gap: 0.5rem;
+    }
+    
+    .nav-links a {
+        font-size: 1rem;
+        padding: 6px 10px;
+    }
 }
 
 .text_main h1{
@@ -71,22 +97,17 @@ body {
     transform: translate(-50%, -50%);
     height: 40%;
     width: 80%;
+    max-width: 1400px;
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    padding: 1rem;
+    padding: clamp(0.5rem, 2vw, 1rem);
     color: white;
+    gap: 1rem;
+    z-index: 10;
+    box-sizing: border-box;
 }
 
-.text_Herbert{
-    height: 100%;
-    width: 45%;
-    display: flex  ;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    border-radius: 2rem;
-}
-.text_Luis{
+.text_Herbert {
     height: 100%;
     width: 45%;
     display: flex;
@@ -94,29 +115,179 @@ body {
     justify-content: center;
     text-align: center;
     border-radius: 2rem;
+    box-sizing: border-box;
 }
 
-.text_Herbert p{
-    font-size: 2rem;
+.text_Luis {
+    height: 100%;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 2rem;
+    box-sizing: border-box;
+}
+
+.text_Herbert p {
+    font-size: clamp(0.9rem, 2vw, 2rem);
     padding: 0rem;
+    margin: clamp(0.3rem, 1vh, 0.5rem) 0;
+    line-height: 1.4;
+}
+
+.text_Luis p {
+    font-size: clamp(0.9rem, 2vw, 2rem);
+    padding: 0rem;
+    margin: clamp(0.3rem, 1vh, 0.5rem) 0;
+    line-height: 1.4;
+}
+
+/* Tablets y pantallas mediana*/
+@media (max-width: 1024px) {
+    .main_flex {
+        width: 85%;
+        height: auto;
+        min-height: 40%;
+        padding: clamp(1rem, 3vw, 1.5rem);
+    }
+    
+    .text_Herbert p,
+    .text_Luis p {
+        font-size: clamp(0.85rem, 2.2vw, 1.5rem);
+    }
+}
+
+/* Pantallas medianas */
+@media (max-width: 900px) {
+    .main_flex {
+        flex-direction: column;
+        width: 85%;
+        height: auto;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
+        top: 55%;
+    }
+    
+    .text_Herbert,
+    .text_Luis {
+        width: 100%;
+        height: auto;
+        min-height: 150px;
+        padding: 1.5rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+    }
+    
+    .text_Herbert p,
+    .text_Luis p {
+        font-size: clamp(1rem, 2.5vw, 1.4rem);
+        margin: 0.5rem 0;
+    }
+}
+
+/* Tablets  */
+@media (max-width: 768px) and (min-width: 481px) {
+    .text_Herbert p,
+    .text_Luis p {
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
+    }
+}
+
+/* Móviles pequeño*/
+@media (max-width: 480px) {
+    .main_flex {
+        width: 90%;
+        padding: 1.5rem 1rem;
+        gap: 1.2rem;
+        top: 52%;
+        max-height: 80vh;
+    }
+    
+    .text_Herbert,
+    .text_Luis {
+        padding: 1.2rem;
+        min-height: 130px;
+        border-radius: 0.8rem;
+    }
+    
+    .text_Herbert p,
+    .text_Luis p {
+        font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+        margin: 0.4rem 0;
+        line-height: 1.4;
+    }
+}
+
+/* Móviles muy pequeños  */
+@media (max-width: 360px) {
+    .main_flex {
+        width: 95%;
+        padding: 1.2rem 0.8rem;
+        gap: 1rem;
+        top: 50%;
+        max-height: 75vh;
+    }
+    
+    .text_Herbert,
+    .text_Luis {
+        padding: 1rem;
+        min-height: 120px;
+    }
+    
+    .text_Herbert p,
+    .text_Luis p {
+        font-size: clamp(0.75rem, 4vw, 1rem);
+        margin: 0.3rem 0;
+    }
+}
+
+/* Estilos para text_main - asegurar que no se tape */
+.text_main {
+    position: relative;
+    z-index: 5;
+    padding: 2rem 1rem;
+    margin-top: 80px;
+    margin-left: 10%;
+    color: white;
+}
+
+.text_main h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
     margin: 0;
 }
 
-.text_Luis p{
-    font-size: 2rem;
-    padding: 0rem;
-    margin: 0;
+/* Prevenir scroll horizontal */
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 
-.linc_deco {
-    position: fixed;
-    left: 10%;
-    background-color: white;
-    border-radius: 1rem;
-    opacity: 0.7;
+html {
+    overflow-x: hidden;
 }
 
-.linc_deco img {
-    height: 6vh;
-    width: auto;
+@media (max-width: 900px) {
+    .text_main {
+        padding: 1.5rem 1rem 1rem;
+        margin-top: 80px; /* Espacio para la barra de navegación */
+    }
+    
+    body {
+        overflow-x: hidden;
+    }
 }
+
+@media (max-width: 480px) {
+    .text_main {
+        padding: 1rem;
+        margin-top: 70px;
+    }
+    
+    .text_main h1 {
+        font-size: clamp(1.8rem, 6vw, 3rem);
+    }
+}
+

@@ -7,32 +7,32 @@ function addDebugMessage(message) {
 
 const originalLeaderboardData = {
     '6to': {
-        labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
-        values: [25, 18, 30, 22]
+        labels: ['Carl Lewis', 'Michael Jordan', 'Michael Phelps', 'Serena Williams'],
+        values: [0, 0, 0, 0]
     },
     '7mo': {
-        labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
-        values: [45, 38, 41, 35]
+        labels: ['Aretha Franklin', 'Bob Dylan', 'Elvis Presley', 'Glenn Miller'],
+        values: [0, 0, 0, 0]
     },
     '8vo': {
-        labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
-        values: [100, 60, 12, 17]
+        labels: ['Andy Warhol', 'Georgia Totto', 'Jackson Pollock', 'James Whistler'],
+        values: [0, 0, 0, 0]
     },
     '9no': {
-        labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'], 
-        values: [48, 35, 44, 39]
+        labels: ['Amelia Earhart', 'Elliot Ness', 'Martin Luther King', 'Neil Amstrong'], 
+        values: [0, 0, 0, 0]
     },
     '10mo': {
-        labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
-        values: [42, 47, 38, 45]
+        labels: ['Mark Twain', 'Louisa May Alcott', 'Ernest Hemingway', 'Edgar Allan Poe'],
+        values: [0, 0, 0, 0]
     },
     '11vo': {
-        labels: ['Salón A', 'Salón B', 'Salón C', 'Salón D'],
-        values: [51, 43, 49, 46]
+        labels: ['Maya Angelou', 'Sylvia Plath', 'T.S. Eliot', 'Walt Whitman'],
+        values: [0, 0, 0, 0]
     },
     'promociones': {
         labels: ['6to Grado', '7mo Grado', '8vo Grado', '9no Grado', '10mo Grado', '11vo Grado'],
-        values: [95, 159, 189, 166, 172, 189]
+        values: [0, 0, 0, 0, 0, 0]
     }
 };
 
