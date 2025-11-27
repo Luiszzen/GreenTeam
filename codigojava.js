@@ -73,21 +73,12 @@ window.addEventListener('load', () => {
         
         // Ocultar elementos de animación inicial
         const centro = document.querySelector('.centro');
-        const backTransicion = document.querySelector('.back-transicion');
         if (centro) centro.style.display = 'none';
-        if (backTransicion) backTransicion.style.display = 'none';
         
         return;
     }
     
-    const imagen = document.querySelector('.obj-transicion');
-    if (imagen) {
-        imagen.classList.add('reset');
-        setTimeout(() => {
-            imagen.classList.remove('reset');
-            imagen.classList.add('reactivate');
-        }, 100);
-    }
+
     
     const finalContent = document.querySelector('.content-after-expand');
     if (finalContent) {
@@ -162,7 +153,7 @@ function enableScroll() {
     document.body.classList.add('scroll-enabled');
 }
 
-setTimeout(enableScroll, 11000);
+setTimeout(enableScroll, 3500);
 
 // Función para detectar si el scroll va hacia arriba
 function isScrollingUp(currentScrollY) {
@@ -319,7 +310,7 @@ setTimeout(() => {
             }
         });
     }
-}, 11500);
+}, 4500);
 
 // Añadir estilos para ocultar la barra de scroll
 const style = document.createElement('style');
@@ -1074,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!sessionStorage.getItem('fromSubpage') && !db.currentUser) {
             showAuthModal();
         }
-    }, 11500);
+    }, 4500);
 });
 
 // Cerrar modales con tecla Escape

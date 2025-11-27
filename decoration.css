@@ -114,73 +114,7 @@ body {
     z-index: 10;
 }
 
-.back-transicion {
-    position: fixed;
-    width: 100vw;
-    bottom: 0;
-    height: 0vh;
-    background-color: rgb(51, 161, 78);
-    z-index: 11;
-    animation: 1.5s cambiar-fondo ease-in-out 6.2s forwards;
-}
 
-.intro-page {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 100vh;
-    color: white;
-    font-size: 2vw;
-    opacity: 0;
-    animation: aparecer-texto 1s ease-in-out 8s forwards;
-    position: relative;
-}
-
-.intro-page-right {
-    animation: estado-reposo 2s ease-in-out 9.7s infinite;
-}
-
-.intro-page-left {
-    animation: estado-reposo 2s ease-in-out 10.0s infinite;
-}
-
-.expansion-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 15;
-    pointer-events: none;
-}
-
-.obj-transicion {
-    height: 30vh;
-    width: 30vw;
-    animation-name: estado-reposo, expandirScroll;
-    animation-duration: 2s, 1s;
-    animation-delay: 9.4s, none;
-    animation-timing-function: ease-in-out, linear;
-    animation-iteration-count: infinite, 1;
-    animation-timeline: auto, scroll(root);
-    animation-range: normal, entry 0% exit 100%;
-    animation-fill-mode: none, none;
-    object-fit: contain;
-}
-
-.obj-transicion.reset {
-    animation: none;
-}
-
-.obj-transicion.reset.reactivate {
-    animation-name: estado-reposo, expandirScroll;
-    animation-duration: 2s, 1s;
-    animation-delay: 9.4s, none;
-    animation-timing-function: ease-in-out, linear;
-    animation-iteration-count: infinite, 1;
-    animation-timeline: auto, scroll(root);
-    animation-range: normal, entry 0% exit 100%;
-    animation-fill-mode: none, none;
-}
 
 .color-background {
     position: fixed;
